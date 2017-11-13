@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using LogTime.Models;
 
 namespace LogTime
 {
@@ -15,6 +17,10 @@ namespace LogTime
     {
         public Startup(IConfiguration configuration)
         {
+            using (var db = new TaskDbContext())
+            {
+                db.Database.EnsureCreated();
+            }
             Configuration = configuration;
         }
 
@@ -23,6 +29,19 @@ namespace LogTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option =>
+            {
+                option.AddPolicy("AllowAllOrigin",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader()
+                               .AllowCredentials();
+                    });
+            });
+            services.AddMemoryCache();
+            services.AddEntityFrameworkSqlite().AddDbContext<TaskDbContext>();
             services.AddMvc();
         }
 
