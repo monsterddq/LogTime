@@ -24,8 +24,7 @@ namespace LogTime.Models
         {
             User = user;
         }
-
-        [Key]
+        [Required]
         public string TypeCode { get; set; }
         public string TypeName { get; set; }
         public string CreatorUserName { get; set; }

@@ -14,7 +14,7 @@ namespace LogTime.Models
             this.Blocks = new List<Block>();
             this.TaskTypes = new List<TaskType>();
         }
-
+        
         public Task(string taskCode, string taskName, string taskLink, DateTime lastUpdateDate, string creatorUserName)
         {
             TaskCode = taskCode;
@@ -35,8 +35,7 @@ namespace LogTime.Models
             Blocks = blocks;
             TaskTypes = taskTypes;
         }
-
-        [Key]
+        [Required]
         public string TaskCode { get; set; }
         public string TaskName { get; set; }
         public string TaskLink { get; set; }
