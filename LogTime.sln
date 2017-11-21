@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogTime", "LogTime\LogTime.csproj", "{EFDD0485-C85B-4C88-B539-D5DEBEECA786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitConsole", "UnitConsole\UnitConsole.csproj", "{38A2834F-DEA1-4E5C-B952-3C6E7AAA371C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitConsole", "UnitConsole\UnitConsole.csproj", "{38A2834F-DEA1-4E5C-B952-3C6E7AAA371C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

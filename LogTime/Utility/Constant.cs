@@ -14,5 +14,6 @@ namespace LogTime.Utility
         public const string PrefixTask = "task";
         public const string PrefixType = "type";
         public const string PrefixBlock = "block";
+        public const string Serect = "pk78syiEByfpCRHp5GdA7K0Z4+4dvc1X73fibeF0yCdh3z4kvCOOobqfF/ewWQIbfQP+0wuBvH4S9sw9FD2OAA==";
     }
 }
