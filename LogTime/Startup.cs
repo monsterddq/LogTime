@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using LogTime.Models;
+using LogTime.Config;
 
 namespace LogTime
 {
@@ -29,6 +30,7 @@ namespace LogTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AutoMapperConfiguration.Configure();
             services.AddCors(option =>
             {
                 option.AddPolicy("AllowAllOrigin",

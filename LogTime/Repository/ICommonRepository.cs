@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogTime.Repository
 {
-    interface ICommonRepository<T>
+    public interface ICommonRepository<T>
     {
         List<T> GetAll();
         T Find(string code);

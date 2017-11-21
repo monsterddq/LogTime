@@ -9,10 +9,7 @@ namespace LogTime.Models
 {
     public class Block
     {
-        public Block()
-        {
-            this.Task = new Task();
-        }
+        public Block() {}
 
         public Block(string blockCode, DateTime startDate, DateTime? endDate, string blockName, string taskCode)
         {

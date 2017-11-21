@@ -46,9 +46,6 @@ namespace LogTime.Utility
                 await client.DisconnectAsync(true).ConfigureAwait(false);
             }
         }
-        //public static string GenerateCode<T>()
-        //{
-        //    if(typeof(T) )
-        //}
+        public static string GenerateCode(string prefix) => $"{prefix}-{DateTime.Now.Ticks}";
     }
 }
