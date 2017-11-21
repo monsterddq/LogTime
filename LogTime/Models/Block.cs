@@ -29,8 +29,7 @@ namespace LogTime.Models
             TaskCode = taskCode;
             Task = task;
         }
-
-        [Key]
+        [Required]
         public string BlockCode { get; set; }
         public DateTime StartDate { get; set; }
         public Nullable<DateTime> EndDate { get; set; }

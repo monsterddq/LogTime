@@ -19,12 +19,9 @@ namespace LogTime.Models
             Task = task;
             Type = type;
         }
-
-        [Key]
-        [Column(Order = 0)]
+        [Required]
         public string TaskCode { get; set; }
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         public string TypeCode { get; set; }
         [ForeignKey("TaskCode")]
         public virtual Task Task { get; set; }
