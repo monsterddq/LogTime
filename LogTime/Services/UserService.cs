@@ -12,7 +12,7 @@ namespace LogTime.Services
 {
     public class UserService : AbstractService<UserDTO, string, User>
     {
-        private readonly ICommonRepository<User> repository;
+        private UserRepository repository;
         public UserService() : base()
         {
             repository = new UserRepository();
@@ -66,6 +66,13 @@ namespace LogTime.Services
         public override Pager<UserDTO> LoadAll(int CurrentPage, int NoOfRowInPage)
         {
             return null;
+        }
+
+        public UserDTO FetchByUserName(string username)
+        {
+            User user = repository.
+            return user == null ? null : Mapper.Map<UserDTO>(user);
+
         }
     }
 }
