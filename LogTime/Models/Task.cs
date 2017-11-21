@@ -45,7 +45,6 @@ namespace LogTime.Models
         public DateTime LastUpdateDate { get; set; }
         public string CreatorUserName { get; set; }
 
-
         [ForeignKey("CreatorUserName")]
         public virtual User User { get; set; }
         public virtual List<Block> Blocks { get; set; }
