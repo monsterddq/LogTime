@@ -14,29 +14,10 @@ namespace LogTime.Repository
             db = new TaskDbContext();
         }
 
-        public T AddNew(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Find(string code)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<T> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Modify(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Remove(T obj)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract T AddNew(T obj);
+        public abstract T Find(string code);
+        public abstract List<T> GetAll();
+        public abstract T Modify(T obj);
+        public abstract T Remove(T obj);
     }
 }

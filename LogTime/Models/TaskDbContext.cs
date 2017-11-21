@@ -8,8 +8,14 @@ namespace LogTime.Models
 {
     public class TaskDbContext : DbContext
     {
+        public TaskDbContext():base()
+        {}
+
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Type> Types { get; set; }
+        public virtual DbSet<Block> Blocks { get; set; }
+        public virtual DbSet<TaskType> TaskTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

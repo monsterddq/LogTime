@@ -11,26 +11,44 @@ namespace LogTime.Models
     {
         public Task()
         {
-            this.User = new User();
+            this.Blocks = new List<Block>();
+            this.TaskTypes = new List<TaskType>();
         }
 
-        public Task(string task_code, DateTime start_time, DateTime? end_time, string name, int creator, User user)
+        public Task(string taskCode, string taskName, string taskLink, DateTime lastUpdateDate, string creatorUserName)
         {
-            this.TaskCode = task_code;
-            this.StartTime = start_time;
-            this.EndTime = end_time;
-            this.Name = name;
-            this.Creator = creator;
+            TaskCode = taskCode;
+            TaskName = taskName;
+            TaskLink = taskLink;
+            LastUpdateDate = lastUpdateDate;
+            CreatorUserName = creatorUserName;
+        }
+
+        public Task(string taskCode, string taskName, string taskLink, DateTime lastUpdateDate, string creatorUserName, User user, List<Block> blocks, List<TaskType> taskTypes)
+        {
+            TaskCode = taskCode;
+            TaskName = taskName;
+            TaskLink = taskLink;
+            LastUpdateDate = lastUpdateDate;
+            CreatorUserName = creatorUserName;
             User = user;
+            Blocks = blocks;
+            TaskTypes = taskTypes;
         }
 
         [Key]
         public string TaskCode { get; set; }
-        public DateTime StartTime { get; set; }
-        public Nullable<DateTime> EndTime { get; set; }
-        public string Name { get; set; }
-        public int Creator { get; set; }
-        [ForeignKey("creator")]
+        public string TaskName { get; set; }
+        public string TaskLink { get; set; }
+        private DateTime _CreationDate = DateTime.Now;
+        public DateTime CreationDate { get => this._CreationDate; }
+        public DateTime LastUpdateDate { get; set; }
+        public string CreatorUserName { get; set; }
+
+
+        [ForeignKey("CreatorUserName")]
         public virtual User User { get; set; }
+        public virtual List<Block> Blocks { get; set; }
+        public virtual List<TaskType> TaskTypes { get; set; }
     }
 }

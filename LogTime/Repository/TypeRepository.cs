@@ -1,16 +1,16 @@
-﻿using LogTime.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using LogTime.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogTime.Repository
 {
-    public class TaskRepository : CommonRepositoryClass<LogTime.Models.Task>
+    public class TypeRepository : CommonRepositoryClass<LogTime.Models.Type>
     {
-        public TaskRepository() : base() { }
-
-        public override Task AddNew(Task obj)
+        public TypeRepository() : base() { }
+        public override Models.Type AddNew(Models.Type obj)
         {
             using (var tran = db.Database.BeginTransaction())
             {
@@ -30,16 +30,17 @@ namespace LogTime.Repository
             }
         }
 
-        public override Task Find(string code) => db.Tasks.Find(code);
+        public override Models.Type Find(string code) => db.Types.Find(code);
 
-        public override List<Task> GetAll() => db.Tasks.OrderByDescending(w => w.CreationDate).ToList();
+        public override List<Models.Type> GetAll() => db.Types.OrderByDescending(w => w.CreationDate).ToList();
 
-        public override Task Modify(Task obj)
+        public override Models.Type Modify(Models.Type obj)
         {
             using (var tran = db.Database.BeginTransaction())
             {
                 try
                 {
+                    obj.LastUpdateDate = DateTime.Now;
                     db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
                     tran.Commit();
@@ -53,13 +54,13 @@ namespace LogTime.Repository
             }
         }
 
-        public override Task Remove(Task obj)
+        public override Models.Type Remove(Models.Type obj)
         {
             using (var tran = db.Database.BeginTransaction())
             {
                 try
                 {
-                    db.Tasks.Remove(obj);
+                    db.Types.Remove(obj);
                     db.SaveChanges();
                     tran.Commit();
                     return obj;
@@ -72,8 +73,7 @@ namespace LogTime.Repository
             }
         }
 
-        public List<Task> GetByCreator(string UserName) => db.Tasks.Where(w => w.CreatorUserName.Equals(UserName)).ToList();
-        public List<Task> GetByCreator(string UserId,string none) => db.Tasks.Include(w=>w.User).Where(w => w.User.UserId.Equals(UserId)).ToList();
-        public List<Task> GetByType(string TypeCode) => db.Tasks.Include(w => w.TaskTypes).Where(w => w.TaskTypes.Any(e => e.TypeCode.Equals(TypeCode))).ToList();
+        public List<Models.Type> GetByCreator(string UserName) => db.Types.Where(w => w.CreatorUserName.Equals(UserName)).ToList();
+        public List<Models.Type> GetByCreator(string UserId, string none) => db.Types.Include(w=>w.User).Where(w => w.User.UserId.Equals(UserId)).ToList();
     }
 }
