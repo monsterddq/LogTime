@@ -96,8 +96,6 @@ namespace LogTime
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            TaskDbContext db = new TaskDbContext();
-            TaskInitializer.Initialze(db);
             app.UseSession();
             app.UseCors(builder =>
                     builder.AllowAnyOrigin()
