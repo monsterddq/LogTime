@@ -1,7 +1,16 @@
 const host = "http://localhost:56676";
 const RegEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const RegPhone = /^[0]{1}[1,9]{1}[0-9]{8,9}$/;
+const link = {
+  "": "/",
+  "login" : "/login.html",
+  "signup": "/signup.html"
+}
 var main = {
+  now: new Date(),
+  navigate: function(location = "") {
+    setTimeout(()=>{window.location.href = link[location];},1000);
+  },
   ajaxPromise: function(url,method,data){
     return new Promise((resolve, reject)=>{
       $.ajax({
@@ -60,7 +69,24 @@ var main = {
         });
         break;
       default:
-
     }
   },
+  startProcess: function(selector){
+    $(selector).block({
+      message: '<div class="blockui-default-message"><i class="fa fa-circle-o-notch fa-spin"></i><h6>We are processing your request. <br> Please be patient.</h6></div>',
+      overlayCSS:  {
+        background: 'rgba(142, 159, 167, 0.8)',
+        opacity: 1,
+        cursor: 'wait'
+      },
+      css: {
+        width: '50%'
+      },
+      blockMsgClass: 'block-msg-default'
+    });
+  },
+  endProcess: function(selector){
+    $(selector).unblock();
+  },
+
 }

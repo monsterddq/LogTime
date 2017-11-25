@@ -48,6 +48,7 @@ namespace LogTime.Controllers
                 if(!IsUnique(obj))
                     return Json(new ExceptionResult("002", "Duplicate Data"));
                 obj.user_id = GenerateCode(PrefixUser);
+                obj.password = Sha512Hash(obj.password);
                 userService.Add(obj);
                 return Json(new ExceptionResult("200", "Success"));
             }

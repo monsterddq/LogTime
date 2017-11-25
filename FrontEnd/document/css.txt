@@ -3,3 +3,4 @@ css/font-awesome.min.css
 css/bootstrap.min.css
 css/main.css
 css/separate/vendor/pnotify.min.css
+css/separate/vendor/blockui.min.css

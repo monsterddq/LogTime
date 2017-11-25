@@ -4,23 +4,9 @@ class userSignUp{
     this.email = email || "",
     this.password = password || "",
     this.repeatpassword = repeatpassword || "",
-    this.creation_date = (new Date()).toLocaleString(),
-    this.last_update_date = (new Date()).toLocaleString()
+    this.creation_date = main.now.toLocaleString(),
+    this.last_update_date = main.now.toLocaleString()
   }
-}
-function signup(){
-  var data = new userSignUp(
-    $("input[name=username]").val(),
-    $("input[name=email]").val(),
-    $("input[name=password]").val(),
-    $("input[name=repeatpassword]").val()
-  );
-  if(!isValid(data)) return false;
-  main.ajaxPromise("/api/user/signup","POST",data)
-  .then((a) => {
-    let message = a.code === "002" ? "Email or UserName" : "";
-    main.handleResult(a.code,message);
-  })
 }
 function isValid(data){
   if(data.username.length<2){
@@ -53,9 +39,29 @@ function isValid(data){
   }
   return true;
 }
-
+function signup(){
+  var data = new userSignUp(
+    $("input[name=username]").val(),
+    $("input[name=email]").val(),
+    $("input[name=password]").val(),
+    $("input[name=repeatpassword]").val()
+  );
+  console.log(data);
+  if(!isValid(data)){
+    main.endProcess(".signup");
+    return false;
+  }
+  main.ajaxPromise("/api/user/signup","POST",data)
+  .then((a) => {
+    main.endProcess(".signup");
+    let message = a.code === "002" ? "Email or UserName" : "";
+    main.handleResult(a.code,message);
+    if(a.code==="200") main.navigate("login");
+  })
+}
 $(document).ready(function() {
   $("button[type=button]").click(function(event) {
+    main.startProcess(".signup");
     signup();
     return false;
   });
