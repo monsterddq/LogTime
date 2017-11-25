@@ -43,7 +43,6 @@ namespace LogTime.Controllers
         [Route("signup")]
         public JsonResult Signup(UserDTO obj)
         {
-            
             if (ModelState.IsValid)
             {
                 if(!IsUnique(obj))
