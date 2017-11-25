@@ -3,7 +3,7 @@ const RegEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\")
 const RegPhone = /^[0]{1}[1,9]{1}[0-9]{8,9}$/;
 const link = {
   "": "/",
-  "login" : "/login.html",
+  "signin" : "/sign-in.html",
   "signup": "/signup.html"
 }
 var main = {
@@ -32,6 +32,7 @@ var main = {
         console.log('xhr',xhr);
         console.log('status',status);
         console.log('error',error);
+        main.notify("Error","Proccess fail.");
         reject(xhr,status,error);
       });
     })
@@ -62,6 +63,12 @@ var main = {
             message: message
         });
         break;
+      case "003":
+        main.notify("Warn","UserName or Email is not find.");
+        break;
+      case "004":
+        main.notify("Warn","Password is not match.");
+        break;
       case "200":
         $.notify({
             title: "Success",
@@ -88,5 +95,10 @@ var main = {
   endProcess: function(selector){
     $(selector).unblock();
   },
-
+  notify: function(title,message){
+    $.notify({
+        title: title,
+        message: message
+    });
+  },
 }

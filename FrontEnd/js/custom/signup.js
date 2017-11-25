@@ -8,34 +8,22 @@ class userSignUp{
     this.last_update_date = main.now.toLocaleString()
   }
 }
-function isValid(data){
+function isValid(data,type){
   if(data.username.length<2){
-    $.notify({
-        title: "Warn:",
-        message: "UserName is invalid"
-    });
+    main.notify("Warn","UserName is invalid");
     return false;
   }
-  if(!RegEmail.test(data.email)){
-    $.notify({
-        title: "Warn:",
-        message: "Email is invalid"
-    });
+  if(!data.email || !RegEmail.test(data.email)){
+    main.notify("Warn","Email is invalid");
     return false;
   }
-  if(data.password.length<6)  {
-    $.notify({
-        title: "Warn:",
-        message: "Password is invalid"
-    });
+  if(!data.password || data.password.length<6)  {
+    main.notify("Warn","Password is invalid");
     return false;
   }
   if(data.password!==data.repeatpassword){
-    $.notify({
-        title: "Warn:",
-        message: "Password does not match"
-    });
-    return true;
+    main.notify("Warn","Password does not match");
+    return false;
   }
   return true;
 }
@@ -46,7 +34,6 @@ function signup(){
     $("input[name=password]").val(),
     $("input[name=repeatpassword]").val()
   );
-  console.log(data);
   if(!isValid(data)){
     main.endProcess(".signup");
     return false;
@@ -56,7 +43,7 @@ function signup(){
     main.endProcess(".signup");
     let message = a.code === "002" ? "Email or UserName" : "";
     main.handleResult(a.code,message);
-    if(a.code==="200") main.navigate("login");
+    if(a.code==="200") main.navigate("signin");
   })
 }
 $(document).ready(function() {

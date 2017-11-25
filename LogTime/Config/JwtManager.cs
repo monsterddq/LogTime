@@ -16,10 +16,10 @@ namespace LogTime.Config
             var symmetricKey = Convert.FromBase64String(Constant.Serect);
             var now = DateTime.UtcNow;
             var claims = new Claim[] {
-                    new Claim(ClaimTypes.Sid, UserId),
-                    new Claim(ClaimTypes.Email, Email),
-                    new Claim(ClaimTypes.Name, FullName),
-                    new Claim(ClaimTypes.NameIdentifier, UserName)
+                    new Claim(ClaimTypes.Sid, UserId ?? ""),
+                    new Claim(ClaimTypes.Email, Email ?? ""),
+                    new Claim(ClaimTypes.Name, FullName ?? ""),
+                    new Claim(ClaimTypes.NameIdentifier, UserName ?? "")
                 };
             var token = new JwtSecurityToken(
                 issuer: "LogTime.NetCore",

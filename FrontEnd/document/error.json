@@ -2,5 +2,7 @@
   "401": "No Authentication",
   "404": "Not Found URL",
   "001": "Invalid Data",
-  "002": "Duplicate Data"
+  "002": "Duplicate Data",
+  "003": "Not Found UserName or Email",
+  "004": "Do not match Password"
 }
