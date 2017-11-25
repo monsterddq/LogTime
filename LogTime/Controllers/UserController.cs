@@ -9,6 +9,8 @@ using LogTime.Models;
 using LogTime.Config;
 using LogTime.CustomException;
 using Microsoft.AspNetCore.Authorization;
+using static LogTime.Utility.Utility;
+using static LogTime.Utility.Constant;
 
 namespace LogTime.Controllers
 {
@@ -18,8 +20,8 @@ namespace LogTime.Controllers
     {
         private UserService userService;
         public UserController() => userService = new UserService();
-        [Route("login")]
         [HttpPost]
+        [Route("login")]
         public JsonResult Login(UserDTO obj)
         {
             var user = userService.FetchByUserName(obj.username);
@@ -29,14 +31,36 @@ namespace LogTime.Controllers
                 return Json(new ExceptionResult("401", "account or password is incorrect"));
         }
 
-        [Route("details")]
         [HttpGet]
         [Authorize]
+        [Route("")]
         public JsonResult GetCurrentUser()
         {
             return Json("asdf");
         }
-        //=> Json(userService.FetchByKey(User.Claims.FirstOrDefault().Value));
+
+        [HttpPost]
+        [Route("signup")]
+        public JsonResult Signup(UserDTO obj)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                if(!IsUnique(obj))
+                    return Json(new ExceptionResult("002", "Duplicate Data"));
+                obj.user_id = GenerateCode(PrefixUser);
+                userService.Add(obj);
+                return Json(new ExceptionResult("200", "Success"));
+            }
+            else return Json(new ExceptionResult("001", "Invalid data"));
+        }
+
+        private bool IsUnique(UserDTO obj)
+        {
+            if (userService.FetchByUserName(obj.username) != null) return false;
+            if (userService.FetchByEmail(obj.email) != null) return false;
+            return true;
+        }
 
     }
 }

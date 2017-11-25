@@ -17,7 +17,7 @@ namespace LogTime.CustomException
 
         public ExceptionResult() { }
 
-        private string code;
-        private string message;
+        public string code { get; set; }
+        public string message { get; set; }
     }
 }

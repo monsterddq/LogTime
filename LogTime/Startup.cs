@@ -14,6 +14,7 @@ using LogTime.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using LogTime.Utility;
+using LogTime.DTO;
 
 namespace LogTime
 {
@@ -33,6 +34,7 @@ namespace LogTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AutoMapperConfiguration.Configure();
             services.AddMvc((options =>
             {
                 options.CacheProfiles.Add("Default",

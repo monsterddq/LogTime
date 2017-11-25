@@ -72,7 +72,12 @@ namespace LogTime.Services
         {
             User user = repository.FindByUserName(username);
             return user == null ? null : Mapper.Map<User, UserDTO>(user);
+        }
 
+        public UserDTO FetchByEmail(string email)
+        {
+            User user = repository.FindByEmail(email);
+            return user == null ? null : Mapper.Map<User, UserDTO>(user);
         }
     }
 }
