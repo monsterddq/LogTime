@@ -29,6 +29,7 @@ namespace LogTime.DTO
         [Required]
         [MinLength(2)]
         [MaxLength(255)]
+        [RegularExpression(@"^[A-z0-9]*$")]
         public string username { get; set; }
         [Required]
         [MinLength(6)]

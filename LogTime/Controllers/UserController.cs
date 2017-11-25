@@ -20,16 +20,6 @@ namespace LogTime.Controllers
     {
         private UserService userService;
         public UserController() => userService = new UserService();
-        [HttpPost]
-        [Route("login")]
-        public JsonResult Login(UserDTO obj)
-        {
-            var user = userService.FetchByUserName(obj.username);
-            if (user.password.Equals(Utility.Utility.Sha512Hash(obj.password)))
-                return Json(JwtManager.GenerateToken(user.user_id, user.username, user.fullname, user.email));
-            else
-                return Json(new ExceptionResult("401", "account or password is incorrect"));
-        }
 
         [HttpGet]
         [Authorize]
@@ -43,16 +33,29 @@ namespace LogTime.Controllers
         [Route("signup")]
         public JsonResult Signup(UserDTO obj)
         {
-            
-            if (ModelState.IsValid)
-            {
-                if(!IsUnique(obj))
-                    return Json(new ExceptionResult("002", "Duplicate Data"));
-                obj.user_id = GenerateCode(PrefixUser);
-                userService.Add(obj);
-                return Json(new ExceptionResult("200", "Success"));
-            }
-            else return Json(new ExceptionResult("001", "Invalid data"));
+            if (!ModelState.IsValid)
+                return Json(new ExceptionResult("001", "Invalid data"));
+            if(!IsUnique(obj))
+                return Json(new ExceptionResult("002", "Duplicate Data"));
+            obj.user_id = GenerateCode(PrefixUser);
+            obj.password = Sha512Hash(obj.password);
+            userService.Add(obj);
+            return Json(new ExceptionResult("200", "Success"));
+        }
+
+        [HttpPost]
+        [Route("signin")]
+        public JsonResult Signin(UserSignUpLoginDTO obj)
+        {
+            if (!ModelState.IsValid)
+                return Json(new ExceptionResult("001", "Invalid data"));
+            UserDTO user = userService.FetchByEmail(obj.email) 
+                        ?? userService.FetchByUserName(obj.username);
+            if(user==null)
+                return Json(new ExceptionResult("003", "Not found UserName or Email."));
+            if(!IsMatchPassword(obj.password,user))
+                return Json(new ExceptionResult("004", "Do not match password."));
+            return Json(JwtManager.GenerateToken(user.user_id, user.username, user.fullname, user.email));
         }
 
         private bool IsUnique(UserDTO obj)
@@ -61,6 +64,7 @@ namespace LogTime.Controllers
             if (userService.FetchByEmail(obj.email) != null) return false;
             return true;
         }
-
+        private bool IsMatchPassword(string passowrd, UserDTO user) 
+            => Sha512Hash(passowrd).Equals(user.password);
     }
 }

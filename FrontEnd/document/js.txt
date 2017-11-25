@@ -1,0 +1,6 @@
+js/jquery.min.js
+js/tether.min.js
+js/bootstrap.min.js
+js/plugins.js
+js/lib/bootstrap-notify/bootstrap-notify.min.js
+js/lib/blockUI/jquery.blockUI.js
