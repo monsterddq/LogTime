@@ -23,7 +23,7 @@ namespace LogTime.Services
         {
             try
             {
-                repository.AddNew(Mapper.Map<User>(obj));
+                repository.AddNew(Mapper.Map<UserDTO, User>(obj));
                 return obj;
             }
             catch (Exception)
@@ -37,7 +37,7 @@ namespace LogTime.Services
             UserDTO user = FetchByKey(key);
             if (user != null)
             {
-                repository.Remove(Mapper.Map<User>(user));
+                repository.Remove(Mapper.Map<UserDTO, User>(user));
                 return user;
             }
             else
@@ -49,7 +49,7 @@ namespace LogTime.Services
             User user = repository.Find(obj.user_id);
             if (user != null)
             {
-                repository.Modify(Mapper.Map<User>(obj));
+                repository.Modify(Mapper.Map<UserDTO, User>(obj));
                 return obj;
             }
             else
@@ -59,7 +59,7 @@ namespace LogTime.Services
         public override UserDTO FetchByKey(string key)
         {
             User user = repository.Find(key);
-            return user == null ? null : Mapper.Map<UserDTO>(user);
+            return user == null ? null : Mapper.Map<User, UserDTO>(user);
 
         }
 
@@ -70,9 +70,14 @@ namespace LogTime.Services
 
         public UserDTO FetchByUserName(string username)
         {
-            User user = repository.
-            return user == null ? null : Mapper.Map<UserDTO>(user);
+            User user = repository.FindByUserName(username);
+            return user == null ? null : Mapper.Map<User, UserDTO>(user);
+        }
 
+        public UserDTO FetchByEmail(string email)
+        {
+            User user = repository.FindByEmail(email);
+            return user == null ? null : Mapper.Map<User, UserDTO>(user);
         }
     }
 }

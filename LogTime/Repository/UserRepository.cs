@@ -73,5 +73,7 @@ namespace LogTime.Repository
         }
 
         public User FindByUserName(string username) => db.Users.Where(w => w.Username.Equals(username)).SingleOrDefault();
+
+        public User FindByEmail(string email) => db.Users.Where(w => w.Email.Equals(email)).SingleOrDefault();
     }
 }
